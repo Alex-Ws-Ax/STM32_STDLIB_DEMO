@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "delay.h"
+#include "debug.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -47,6 +48,7 @@ void Gpio_Init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
+
 /**
   * @brief  Main program.
   * @param  None
@@ -58,7 +60,8 @@ int main(void)
     SystemInit();
     Gpio_Init();
     SysTick_Init(72);
-
+    DebugInit();
+    DEBUG(DEBUG_INFO,"init over\n");
     while (1)
     {
         GPIO_SetBits(GPIOC, GPIO_Pin_13);
