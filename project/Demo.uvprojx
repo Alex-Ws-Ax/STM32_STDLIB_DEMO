@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_LD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\app;..\device;..\driver\inc;..\midware</IncludePath>
+              <IncludePath>..\app;..\device;..\driver\inc;..\midware\common;..\midware\cmd_parse</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -523,14 +523,19 @@
           <GroupName>midware</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\midware\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>debug.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\midware\debug.c</FilePath>
+              <FilePath>..\midware\common\debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\midware\common\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\midware\cmd_parse\cmd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -546,6 +551,11 @@
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\app\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\led.c</FilePath>
             </File>
           </Files>
         </Group>
