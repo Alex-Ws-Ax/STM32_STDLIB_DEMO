@@ -557,6 +557,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\led.c</FilePath>
             </File>
+            <File>
+              <FileName>iic_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\iic_test.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

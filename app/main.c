@@ -24,6 +24,7 @@
 #include "delay.h"
 #include "debug.h"
 #include "cmd.h"
+#include "iic_test.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -42,6 +43,8 @@
 
 REGISTER_CMD(led_on, Led_ON,null);
 REGISTER_CMD(led_off, Led_OFF,null);
+REGISTER_CMD(iic_test, test_iic_process,null);
+
 /**
   * @brief  Main program.
   * @param  None
@@ -49,7 +52,6 @@ REGISTER_CMD(led_off, Led_OFF,null);
   */
 int main(void)
 {
-
     SystemInit();
     Led_Init();
     SysTick_Init(72);
@@ -58,7 +60,6 @@ int main(void)
     cmd_init();
     while (1)
     {
-//        Delay_ms(200);
     }
 }
 
