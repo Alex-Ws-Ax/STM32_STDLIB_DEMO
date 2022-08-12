@@ -25,6 +25,7 @@
 #include "debug.h"
 #include "cmd.h"
 #include "iic_test.h"
+#include "press_test.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -44,6 +45,10 @@
 REGISTER_CMD(led_on, Led_ON,null);
 REGISTER_CMD(led_off, Led_OFF,null);
 REGISTER_CMD(iic_test, test_iic_process,null);
+REGISTER_CMD(press_test_start, press_test_start,null);
+REGISTER_CMD(press_test_stop, press_test_stop,null);
+
+
 
 /**
   * @brief  Main program.
@@ -60,6 +65,7 @@ int main(void)
     cmd_init();
     while (1)
     {
+        press_test_process();
     }
 }
 

@@ -562,6 +562,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\iic_test.c</FilePath>
             </File>
+            <File>
+              <FileName>press_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\press_test.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

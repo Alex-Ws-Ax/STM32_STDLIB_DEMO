@@ -1,17 +1,8 @@
-#include "stm32f10x_i2c.h"
-#include "stm32f10x_rcc.h"
+
 #include "iic_test.h"
 #include "debug.h"
 
-#define     TEST_IIC_PORT       I2C1
-#define     TEST_OWN_ADDR       0x32
-#define     TEST_IIC_SPEED      100000
 
-#define     TEST_IIC_IO_PORT    GPIOB
-#define     TEST_IIC_SDA_PIN    GPIO_Pin_7
-#define     TEST_IIC_SCL_PIN    GPIO_Pin_6
-
-#define     TEST_IIC_TIMEOUT    1000000
 
 
 void I2C_GPIO_Config(void)
@@ -117,7 +108,7 @@ void IIC_TxData(uint8_t device_addr, uint8_t cmd, uint8_t *tx_data, uint16_t siz
     uint16_t i = 0;
 
     //FlagStatus bitstatus = RESET
-//    while (I2C_GetFlagStatus(TEST_IIC_PORT,  I2C_FLAG_BUSY));  //检查I2C总线是否繁忙
+    //while (I2C_GetFlagStatus(TEST_IIC_PORT,  I2C_FLAG_BUSY));  //检查I2C总线是否繁忙
     I2C_GenerateSTART(TEST_IIC_PORT,  ENABLE); //打开I2C1
     //ErrorStatus status = ERROR,   ERROR是个枚举类型，值为0
     while (!I2C_CheckEvent(TEST_IIC_PORT,  I2C_EVENT_MASTER_MODE_SELECT)); //EV5,主模式
@@ -141,6 +132,7 @@ void IIC_RxData(uint8_t device_addr, uint8_t cmd, uint8_t *rx_data, uint16_t siz
 {
     uint16_t i = 0;
 
+    //while (I2C_GetFlagStatus(TEST_IIC_PORT,  I2C_FLAG_BUSY));  //检查I2C总线是否繁忙
     //发送Start信号
     I2C_GenerateSTART(TEST_IIC_PORT, ENABLE);
     //等待EV5事件：IIC开始信号已经发出 （I2C_SR1内SB位置1）
