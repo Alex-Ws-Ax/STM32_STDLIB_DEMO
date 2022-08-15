@@ -6,7 +6,7 @@
 
 #define     TEST_IIC_PORT       I2C1
 #define     TEST_OWN_ADDR       0x32
-#define     TEST_IIC_SPEED      100000
+#define     TEST_IIC_SPEED      20000
 
 #define     TEST_IIC_IO_PORT    GPIOB
 #define     TEST_IIC_SDA_PIN    GPIO_Pin_7
@@ -22,10 +22,14 @@ void test_iic_process(void);
 
 void IIC_Init(void);
 
-void IIC_RxData(uint8_t device_addr, uint8_t cmd, uint8_t *rx_data, uint16_t size);
+uint8_t I2C_ByteRead(uint8_t device_addr, uint8_t cmd);
+void I2C_WriteByte(uint8_t device_addr, uint8_t cmd, uint8_t data);
+
+void IIC_RxData(uint8_t device_addr, uint8_t* cmd, uint16_t cmd_size,uint8_t *rx_data, uint16_t data_size);
 
 
 
+void IIC_TxData(uint8_t device_addr, uint8_t cmd, uint8_t *tx_data, uint16_t size);
 
 #endif
 

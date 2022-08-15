@@ -567,6 +567,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\press_test.c</FilePath>
             </File>
+            <File>
+              <FileName>tcae_update_test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\tcae_update_test.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

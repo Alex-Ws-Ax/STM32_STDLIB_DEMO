@@ -26,6 +26,7 @@
 #include "cmd.h"
 #include "iic_test.h"
 #include "press_test.h"
+#include "tcae_update_test.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -47,7 +48,7 @@ REGISTER_CMD(led_off, Led_OFF,null);
 REGISTER_CMD(iic_test, test_iic_process,null);
 REGISTER_CMD(press_test_start, press_test_start,null);
 REGISTER_CMD(press_test_stop, press_test_stop,null);
-
+REGISTER_CMD(tcae_iap_test, iap_update_process,null);
 
 
 /**

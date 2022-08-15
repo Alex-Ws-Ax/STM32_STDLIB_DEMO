@@ -45,7 +45,7 @@ void IIC_Init(void)
 void I2C_WriteByte(uint8_t device_addr, uint8_t cmd, uint8_t data)
 {
     //FlagStatus bitstatus = RESET
-    while (I2C_GetFlagStatus(TEST_IIC_PORT,  I2C_FLAG_BUSY));  //检查I2C总线是否繁忙
+    //while (I2C_GetFlagStatus(TEST_IIC_PORT,  I2C_FLAG_BUSY));  //检查I2C总线是否繁忙
     I2C_GenerateSTART(TEST_IIC_PORT,  ENABLE); //打开I2C1
     //ErrorStatus status = ERROR,   ERROR是个枚举类型，值为0
     while (!I2C_CheckEvent(TEST_IIC_PORT,  I2C_EVENT_MASTER_MODE_SELECT)); //EV5,主模式
@@ -128,7 +128,7 @@ void IIC_TxData(uint8_t device_addr, uint8_t cmd, uint8_t *tx_data, uint16_t siz
     I2C_GenerateSTOP(TEST_IIC_PORT,  ENABLE);  //关闭I2C总线
 }
 
-void IIC_RxData(uint8_t device_addr, uint8_t cmd, uint8_t *rx_data, uint16_t size)
+void IIC_RxData(uint8_t device_addr, uint8_t* cmd, uint16_t cmd_size,uint8_t *rx_data, uint16_t data_size)
 {
     uint16_t i = 0;
 
@@ -143,10 +143,13 @@ void IIC_RxData(uint8_t device_addr, uint8_t cmd, uint8_t *rx_data, uint16_t siz
     //等待EV6事件：表示地址已经发送
     while (I2C_CheckEvent(TEST_IIC_PORT, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED) == ERROR);
 
-    //写入EEPROM内存“单元地址”
-    I2C_SendData(TEST_IIC_PORT, cmd);
-    //等待EV8事件：数据寄存器DR为空 ,地址数据已经发送
-    while (I2C_CheckEvent(TEST_IIC_PORT, I2C_EVENT_MASTER_BYTE_TRANSMITTED) == ERROR);
+    for(i=0;i<cmd_size;i++)
+    {
+        //写入EEPROM内存“单元地址”
+        I2C_SendData(TEST_IIC_PORT, cmd[i]);
+        //等待EV8事件：数据寄存器DR为空 ,地址数据已经发送
+        while (I2C_CheckEvent(TEST_IIC_PORT, I2C_EVENT_MASTER_BYTE_TRANSMITTED) == ERROR);
+    }
 
     //重新发送Start信号
     I2C_GenerateSTART(TEST_IIC_PORT, ENABLE);
@@ -158,11 +161,11 @@ void IIC_RxData(uint8_t device_addr, uint8_t cmd, uint8_t *rx_data, uint16_t siz
     //等待EV6事件（接收）：表示地址已经发送
     while (I2C_CheckEvent(TEST_IIC_PORT, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED) == ERROR); //注意方向
 
-    for (i = 0; i < size; i++)
+    for (i = 0; i < data_size; i++)
     {
         //等待EV7事件， BUSY, MSL and RXNE flags
         while (I2C_CheckEvent(TEST_IIC_PORT, I2C_EVENT_MASTER_BYTE_RECEIVED) == ERROR);
-        if (i == (size - 1))
+        if (i == (data_size - 1))
         {
             //产生非应答
             I2C_AcknowledgeConfig(TEST_IIC_PORT, DISABLE);
@@ -185,11 +188,12 @@ void test_iic_process(void)
 {
     uint8_t tx_data[5] = {0x12, 0x13, 0x14, 0x15, 0x16};
     uint8_t rx_data[5] = {0};
+    uint8_t cmd = 0x00;
 
     IIC_Init();
 
     IIC_TxData(0xA0, 0x00, tx_data, 5);
-    IIC_RxData(0xA0, 0x00, rx_data, 5);
+    IIC_RxData(0xA0, &cmd,1, rx_data, 5);
     DEBUG(DEBUG_INFO, "rx_data[0]=%x rx_data[1]=%x rx_data[2]=%x rx_data[3]=%x rx_data[4]=%x\n",
           rx_data[0], rx_data[1], rx_data[2], rx_data[3], rx_data[4]);
 }

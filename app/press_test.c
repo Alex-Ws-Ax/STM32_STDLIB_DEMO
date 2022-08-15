@@ -21,7 +21,9 @@ void EVENT_IO_Config(void)
 void press_read_state(void)
 {
     uint8_t key_state = 0;
-    IIC_RxData(0xA0,0x02,&key_state,1);
+    uint8_t cmd = 0x02;
+    
+    IIC_RxData(0xA0,&cmd,1,&key_state,1);
 
     if(key_state == 0)
     {
